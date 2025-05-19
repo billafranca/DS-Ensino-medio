@@ -1,0 +1,230 @@
+body {
+    background-color: whitesmoke;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: green;
+    border-radius: 5px;
+    padding: 20px;
+    color: white;
+}
+img{
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+
+#principal {
+    margin: 0;
+    color: white;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+#principal:hover {
+    transform: (1.1);
+    color: white;
+}
+#contato {
+    font-size: 16px;
+    position: relative;
+    top: 0px;
+    background-color: transparent;
+    color: white;
+    border: 2px solid green;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 15px;
+    display: inline-block;
+    opacity: 1;
+    transition-timing-function: ease-in-out;
+}
+
+#contato:hover {
+    opacity: 0.8;
+    background-color: green;
+    color: white;
+    text-decoration: underline;
+}
+
+#contato:active {
+    background-color: #45a049;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+    transition-timing-function: all 0.2 ease-in-out;
+    
+}
+a{
+    text-decoration: none;
+    color: white;
+    opacity: 1;
+    transition-timing-function: all 0.2 ease-in-out;
+}
+a:hover{
+    opacity: 0.8;
+}
+nav ul li a {
+    position: relative;
+    top: 12.3px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+nav ul li a:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+    text-decoration: underline;
+}
+
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px 20px;
+}
+
+.secao {
+    background-color: green;
+    color: white;
+    width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+.secao:hover{
+    background-color: white;
+    color: green;
+    border: solid green;
+    transform: scale(1.1);
+}
+
+.secao h2 {
+    margin-top: 0;
+}
+
+.secao p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+.secao3{
+    color: green;
+    width: 60%;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin: 0 auto;
+    border: solid green;
+}
+.secao3:hover{
+    background-color: green;
+    color: white;
+    border: solid white;
+}
+.ds, .adm {
+    background-color: green;
+    color: white;
+    width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.ds:hover, .adm:hover {
+    background-color: white;
+    color: green;
+    border: 1px solid green;
+    transform: scale(1.1);
+}
+.ds{
+    position: absolute;
+    left: 6%;
+    top: 118%;
+
+}
+.adm{
+    position: absolute;
+    width: 35%;
+    left: 52%;
+    top: 118%;
+}
+.ds{
+    width: 40%;
+    height: 37%;
+}
+#itinerario{
+    text-align: center;
+}
+.dev, .admin{
+    position: absolute;
+    top: 170%;
+    border-radius: 20px;
+    width: 150px;
+    height: 150px;
+    display: inline-block;
+    margin-right: 30px;
+    margin: 0 auto;
+    background-color: green;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer
+}
+.dev{
+    left: 20%;
+}
+.admin{
+    left: 65%;
+}
+.admin:hover{
+    background-color: white;
+    color: green;
+    border: 1px solid green;
+    transform: scale(1.1);
+}
+.dev:hover{
+    background-color: white;
+    color: green;
+    border: 1px solid green;
+    transform: scale(1.1);
+}
+#aluno{
+    position: absolute;
+    background-size: 50%;
+    top: 200%;
+    margin: 0 auto;
+    width: 70%;
+    height: 70%;
+    border-radius: 30px;
+    left: 15%;
+    color: white;
+}
+#aluno:hover{
+    border: solid green;
+}
+#ensino{
+    position: absolute;
+    top: 205%;
+    left: 20%;
+    color: green;
+}
