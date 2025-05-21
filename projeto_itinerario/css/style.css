@@ -228,3 +228,150 @@ main {
     left: 20%;
     color: green;
 }
+#ensino:hover {
+    color: white;
+    background-color: green;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+.secao5{
+    position: absolute;
+    background-color: white;
+    color: green;
+    border: solid green;
+    border-radius: 10px;
+    top: 280%;
+    width: 95%;
+    left: 2%;
+}
+.secao5:hover {
+    color: white;
+    background-color: green;
+    border: solid white;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+.secao6{
+    position: absolute;
+    background-color: white;
+    color: green;
+    border: solid green;
+    border-radius: 10px;
+    top: 330%;
+    width: 95%;
+    left: 2%;
+}
+.secao6:hover {
+    color: white;
+    background-color: green;
+    border: solid white;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+#em{
+    position: absolute;
+    top: 400%;
+    left: 20%;
+    color: green;
+    background-color: white;
+    border-radius: 5px;
+    border: solid green;
+    width: 10%;
+}
+#em:hover {
+    color: white;
+    background-color: green;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+#alunomedio{
+    position: absolute;
+    background-size: 50%;
+    top: 400%;
+    margin: 0 auto;
+    width: 70%;
+    height: 70%;
+    border-radius: 30px;
+    left: 15%;
+    color: white;
+}
+#alunomedio:hover{
+    border: solid green;
+}
+.secao7{
+    position: absolute;
+    background-color: white;
+    color: green;
+    border: solid green;
+    border-radius: 10px;
+    top: 500%;
+    width: 95%;
+    left: 2%;
+}
+.secao7:hover {
+    color: white;
+    background-color: green;
+    border: solid white;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+.secao8{
+    position: absolute;
+    background-color: white;
+    color: green;
+    border: solid green;
+    border-radius: 10px;
+    top: 550%;
+    width: 95%;
+    left: 2%;
+}
+.secao8:hover {
+    color: white;
+    background-color: green;
+    border: solid white;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+    color: #777;
+    width: 100%;
+    padding: 20px 0;
+    position: absolute;
+    bottom: 0;
+    top: 600%;
+    left: 0;
+    right: 0;
+}
+#g-pedro {
+    display: inline-block; 
+    margin: 0 10px; 
+}
+  .github-icon {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+}
+.ghub-sub-pedro {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    font-size: 1rem;
+    opacity: 1;
+    transition-timing-function: ease-in-out;
+    font-family: Calibri, sans-serif;
+  }
+  .ghub-sub-pedro:hover {
+    opacity: 0.8;
+  }
+
