@@ -49,3 +49,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+const endereco = document.getElementById("endereco");
+
+endereco.addEventListener("click", function() {
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth',
+        block: 'end'
+    });
+});     

@@ -354,9 +354,8 @@ footer {
     transform: translateY(0);
 }
 
-/* Adicione estas regras ao seu CSS existente */
 
-/* Animações de scroll reveal */
+
 .hidden {
     opacity: 0;
     transform: translateY(50px);
@@ -368,7 +367,7 @@ footer {
     transform: translateY(0);
 }
 
-/* Diferentes tipos de animação */
+
 .fade-in-left {
     transform: translateX(-50px);
 }
@@ -393,7 +392,7 @@ footer {
     transform: scale(1);
 }
 
-/* Animações específicas para seções da escola */
+
 .ds,
 .adm {
     background-color: green;
@@ -413,7 +412,7 @@ footer {
     transform: translateY(0);
 }
 
-/* Animação para seções de texto */
+
 .secao5,
 .secao6,
 .secao7,
@@ -439,7 +438,7 @@ footer {
     transform: translateY(0);
 }
 
-/* Animação para imagens dos alunos */
+
 .secao4,
 .ensinoMedio {
     transition: all 0.8s ease-out;
@@ -453,7 +452,7 @@ footer {
     transform: scale(1);
 }
 
-/* Melhorar hover effects */
+
 .secao:hover,
 .ds:hover,
 .adm:hover {
@@ -496,9 +495,145 @@ main .secao {
     z-index: 1000;
     transition: width 0.3s ease;
 }
-#afooter{
+
+#afooter {
     text-decoration: none;
     text-align: right;
     font-size: 10px;
     color: black;
+}
+
+
+.secao5,
+.secao6,
+.secao7,
+.secao8,
+.secao9 {
+    background-color: rgb(188, 227, 192);
+    color: rgb(0, 0, 0);
+    border: 2px solid rgb(15, 15, 22);
+    border-radius: 20px;
+    margin: 30px auto;
+    width: 90%;
+    transition: all 1s ease-out;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.secao5.show,
+.secao6.show,
+.secao7.show,
+.secao8.show,
+.secao9.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+.secao9{
+    text-align: center ;
+    width: 30%;
+    margin: 0 auto;
+}
+
+.secao4,
+.ensinoMedio {
+    transition: all 1s ease-out;
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.secao4.show,
+.ensinoMedio.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+.secao:hover,
+.ds:hover,
+.adm:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 6px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    z-index: 1000;
+    transition: width 0.5s ease;
+}
+
+#afooter {
+    text-decoration: none;
+    text-align: right;
+    font-size: 12px;
+    color: darkslategray;
+}
+
+#secao9 {
+    text-align: center;
+    width: 20%;
+    margin: auto;
+    background-color: rgb(188, 227, 192);
+    color: rgb(0, 0, 0);
+    border: 2px solid rgb(15, 15, 22);
+    border-radius: 20px;
+    transition: all 1s ease-out;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+#secao9.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#afooter,
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #242424;
+}
+.ds,
+.adm {
+    transition: all 1s ease-out;
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.ds.show,
+.adm.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#endereco{
+    font-size: 16px;
+    position: relative;
+    top: 0px;
+    background-color: transparent;
+    color: white;
+    border: 2px solid green;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 15px;
+    display: inline-block;
+    opacity: 1;
+    transition-timing-function: ease-in-out;
+}
+#endereco:hover{
+    opacity: 0.8;
+    background-color: green;
+    color: white;
+    text-decoration: underline;
+}
+#endereco:active{
+    background-color: #45a049;
 }
