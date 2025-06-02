@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var cnt = document.getElementById("contato");
 
     cnt.addEventListener("click", function () {
-        alert("O contato é:\n Telefone: (11) 9999-9999 \n Email: Guiomarescola@gmail.com")
+        alert("O contato é:\n Telefone: (11) 3782-0781 \n Email: pei.guiomar.rocha@gmail.com \n Horários: Segunda a Sexta, das 7h às 16h");
     })
 })
 
