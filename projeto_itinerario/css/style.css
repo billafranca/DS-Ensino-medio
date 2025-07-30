@@ -317,7 +317,10 @@ footer {
     margin-left: auto;
     margin-right: auto;
 }
-
+.adm{
+    height: 380px;
+    width: 50%;
+}
 #ensino {
     margin: 0 auto;
     color: green;
