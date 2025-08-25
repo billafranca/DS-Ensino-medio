@@ -27,21 +27,27 @@ public class Operacoes{
             String operador = JOptionPane.showInputDialog("Digite o operador (+, -, *, /, %):");
             double n1 = Double.parseDouble(num1);
             double n2 = Double.parseDouble(num2);
+            double res = 0;
             switch (operador) {
                 case "+":
                     resultado = n1 + n2;
+                    JOptionPane.showMessageDialog(null, "o resultado é: " + resultado);
                     break;
                 case "-":
                     resultado = n1 - n2;
+                    JOptionPane.showMessageDialog(null, "o resultado é: " + resultado);
                     break;
                 case "*":
                     resultado = n1 * n2;
+                    JOptionPane.showMessageDialog(null, "o resultado é: " + resultado);
                     break;
                 case "/":
                     resultado = n1 / n2;
+                    JOptionPane.showMessageDialog(null, "o resultado é: " + resultado);
                     break;
                 case "%":
                     resultado = n1 % n2;
+                    JOptionPane.showMessageDialog(null, "o resultado é: " + resultado);
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Operador inválido.");
