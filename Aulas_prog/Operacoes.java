@@ -1,7 +1,8 @@
 import javax.swing.JOptionPane;
 
 public class Operacoes{
-    public static void main(String[] args){
+    public static void main(String[] args) {
+    
         int operacao = Integer.parseInt(JOptionPane.showInputDialog("digite o que deseja fazer (1) calcular área quadrado (2) calcular área retângulo (3) calcular área triângulo (4) realizar uma operação: (-   +   *   /   %) "));
         double resultado = 0;
 
@@ -51,4 +52,5 @@ public class Operacoes{
         }
 
     }
+
 }
