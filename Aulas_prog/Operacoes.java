@@ -50,7 +50,7 @@ public class Operacoes{
                     JOptionPane.showMessageDialog(null, "o resultado é: " + resultado);
                     break;
                 default:
-                    JOptionPane.showMessageDialog(null, "Operador inválido.");
+                    JOptionPane.showMessageDialog(null, "Operador inválido, válidos são: (-   +   *   /   %)");
                     break;
             }
         } else {
