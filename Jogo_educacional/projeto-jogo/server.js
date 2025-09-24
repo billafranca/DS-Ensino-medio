@@ -69,36 +69,30 @@
   });
 
   // rota de login
-  app.post("/login", async (req, res) => {
-    const { email, senha } = req.body;
+  app.post("/login", (req, res) => {
+  const { email, senha } = req.body;
 
-    if (!email || !senha) {
-      return res.status(400).json({ success: false, message: "Preencha todos os campos!" });
-    }
+  if (!email || !senha) {
+    return res.status(400).json({ success: false, message: "Preencha todos os campos!" });
+  }
 
-    // consulta o usuário pelo email
-    const sql = "SELECT * FROM users WHERE email = ?";
-    db.get(sql, [email], async (err, row) => {
-      if (err) {
-        return res.status(500).json({ success: false, message: "Erro no servidor." });
-      }
-      if (!row) {
-        return res.status(401).json({ success: false, message: "Credenciais inválidas!" });
-      }
+  const sql = "SELECT * FROM users WHERE email = ?";
+  db.get(sql, [email], async (err, row) => {
+    if (err) return res.status(500).json({ success: false, message: "Erro no servidor." });
+    if (!row) return res.status(401).json({ success: false, message: "Credenciais inválidas!" });
 
-    // isso aqui compara a senha hashada (criptografada) com a senha digitada //
-      const senhaCorreta = await bcrypt.compare(senha, row.senha);
-      if (!senhaCorreta) {
-        return res.status(401).json({ success: false, message: "Credenciais inválidas!" });
-      }
+    const senhaCorreta = await bcrypt.compare(senha, row.senha);
+    if (!senhaCorreta) return res.status(401).json({ success: false, message: "Credenciais inválidas!" });
 
-      res.json({
-        success: true,
-        message: "Login bem-sucedido!",
-        user: { id: row.id, nome: row.nome, email: row.email } // nunca mande a senha de volta
-      });
+    res.json({
+      success: true,
+      message: "Login bem-sucedido!",
+      user: { id: row.id, nome: row.nome, email: row.email }
     });
   });
+});
+
+
 
   app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
