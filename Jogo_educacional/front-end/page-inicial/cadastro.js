@@ -2,6 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const homeLink = document.getElementById('home');
     const sobreLink = document.getElementById('sobre');
     const contatoLink = document.getElementById('contato');
+    const loginLink = document.getElementById('loginNav')
+
+    loginLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        window.location.href = '../login/page-login.html';
+    });
 
     homeLink.addEventListener('click', (event) => {
         event.preventDefault();

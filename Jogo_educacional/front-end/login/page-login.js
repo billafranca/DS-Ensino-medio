@@ -2,6 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const homeLink = document.getElementById('home');
     const sobreLink = document.getElementById('sobre');
     const contatoLink = document.getElementById('contato');
+    const cadastroLink = document.getElementById('cadastroNav');
+
+    cadastroLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        window.location.href = '../page-inicial/pagina-inicial.html';
+    });
+    
 
     homeLink.addEventListener('click', (event) => {
         event.preventDefault();
