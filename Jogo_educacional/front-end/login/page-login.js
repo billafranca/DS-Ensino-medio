@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (response.ok) {
             alert('Login realizado com sucesso!');
-            window.location.href = 'https://youtu.be/dQw4w9WgXcQ?list=RDdQw4w9WgXcQ';
+            window.location.href = '../page-jogar/index.html';
             form.reset();
         } else {
             const data = await response.json();

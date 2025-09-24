@@ -1,0 +1,112 @@
+body {
+    background: linear-gradient(to right, #d3c5aa, #ffffff, #d3c5aa, #ffffff);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#botaoJogar {
+    font-family: serif;
+    width: 10rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3rem auto;
+    padding: 1rem;
+    background: rgba(222, 178, 140, 0.85);
+    border-radius: 7px;
+    position: absolute;
+    border: solid 1px blacks;
+    left: 50%;
+    top: 50%;   
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease-in-out;
+}
+#botaoJogar:hover {
+    background: rgba(222, 178, 140, 1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transform: translate(-50%, -50%) scale(1.05);
+    cursor: pointer;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: rgb(174, 157, 118);
+    color: whitesmoke;
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    flex-wrap: wrap;
+    gap: 1rem;
+    max-width: 100%;
+}
+
+nav .logo img {
+    width: 40px;
+    height: 40px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    padding: 0;
+    margin: 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: whitesmoke;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    nav a {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+#rodape {
+    background-color: #baa878;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    bottom: 0;
+    width: 100%;
+    margin-top: 50rem;
+}
+
+#githubPedro {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#githubPedro img {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
