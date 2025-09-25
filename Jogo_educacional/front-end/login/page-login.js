@@ -3,6 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const sobreLink = document.getElementById('sobre');
     const contatoLink = document.getElementById('contato');
     const cadastroLink = document.getElementById('cadastroNav');
+    const jogarCadastro = document.getElementById('jogarSem');
+
+    jogarCadastro.addEventListener('click', function(){
+        alert('redirecionando...');
+        window.location.href = '../page-jogar/index.html';
+    });
 
     cadastroLink.addEventListener('click', (event) => {
         event.preventDefault();
@@ -12,7 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     homeLink.addEventListener('click', (event) => {
         event.preventDefault();
-        alert('Você já está na página inicial.');
+        alert('redirecionando...');
+        window.location.href = '../page-inicial/pagina-inicial.html';
     });
 
     sobreLink.addEventListener('click', (event) => {

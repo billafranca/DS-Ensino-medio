@@ -3,6 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const sobreLink = document.getElementById('sobre');
     const contatoLink = document.getElementById('contato');
     const loginLink = document.getElementById('loginNav')
+    const jogarCadastro = document.getElementById('jogarSem');
+
+    jogarCadastro.addEventListener('click', (event) => {
+        event.preventDefault();
+        window.location,href = '../page-jogar/index.html';
+    });
 
     loginLink.addEventListener('click', (event) => {
         event.preventDefault();
