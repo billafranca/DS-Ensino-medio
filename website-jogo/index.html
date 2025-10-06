@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sports Challenge</title>
+    <style>
+        :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa6b2;--glass: rgba(255,255,255,0.03)}
+        *{box-sizing:border-box;font-family:Inter, system-ui, Arial, sans-serif}
+        html,body{height:100%;margin:0;background:linear-gradient(180deg,#071024 0%, #0b1630 100%);color:#e6eef6}
+        header{padding:18px 28px;display:flex;align-items:center;justify-content:space-between}
+        h1{margin:0;font-size:20px;letter-spacing:0.4px}
+        .container{max-width:1100px;margin:18px auto;padding:18px}
+        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+        .card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+        .sport-tile{display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border-radius:10px;transition:transform .15s ease, box-shadow .15s ease}
+        .sport-tile:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(2,6,23,0.5)}
+        .emoji{font-size:34px}
+        .title{font-weight:700}
+        .muted{color:var(--muted);font-size:13px}
+        .hud{display:flex;gap:14px;align-items:center}
+        .badge{background:#07202a;padding:8px 12px;border-radius:999px;font-weight:700}
+        .sport-page{display:none}
+        .sport-page.active{display:block;animation:fadeIn .5s}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+        .actions{display:flex;gap:8px;margin-top:12px}
+        .btn{background:linear-gradient(90deg,var(--accent),#3b82f6);padding:10px 14px;border-radius:10px;border:none;color:#042e37;font-weight:700;cursor:pointer;transition:filter .2s}
+        .btn:active{filter:brightness(0.9)}
+        .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.05);color:var(--muted)}
+        .practice{margin-top:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:16px;border-radius:10px}
+        .prompt{font-size:16px;margin-bottom:8px}
+        .sequence{display:flex;gap:8px;flex-wrap:wrap}
+        .move{padding:8px 10px;border-radius:8px;background:var(--glass);min-width:78px;text-align:center;transition:background .2s,transform .2s}
+        .move.expected{border:2px dashed rgba(255,255,255,0.06);background:rgba(6,182,212,0.12)}
+        .move.correct{background:linear-gradient(90deg,#06b6d4,#3b82f6);color:#042e37;transform:scale(1.08)}
+        .move.wrong{background:#e11d48;color:#fff;transform:scale(0.95)}
+        .progress-bar{height:12px;background:var(--glass);border-radius:8px;overflow:hidden;margin:10px 0}
+        .progress{height:100%;background:linear-gradient(90deg,#06b6d4,#3b82f6);transition:width .3s}
+        .timer{font-size:16px;font-weight:700;margin-left:8px}
+        .combo{font-size:18px;font-weight:700;color:#06b6d4;animation:comboPop .4s}
+        @keyframes comboPop{0%{transform:scale(1.2)}100%{transform:scale(1)}}
+        .ranking{margin-top:18px}
+        .ranking h3{margin-bottom:8px}
+        .ranking-list{list-style:none;padding:0;margin:0}
+        .ranking-list li{background:var(--glass);margin-bottom:6px;padding:8px;border-radius:8px;display:flex;justify-content:space-between}
+        .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(0deg,rgba(2,6,23,0.6),rgba(2,6,23,0.6))}
+        .modal.show{display:flex}
+        .modal-card{width:min(880px,96%);background:linear-gradient(180deg,#071428,#0c2034);padding:18px;border-radius:12px}
+        footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+        @media (max-width:640px){h1{font-size:18px}.emoji{font-size:28px}}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sports Challenge — Jogo Avançado</h1>
+        <div class="hud">
+            <div class="badge" id="pointsBadge">Pontos: 0</div>
+            <div class="badge" id="levelBadge">Nível: 1</div>
+            <div class="badge" id="timerBadge" style="display:none"></div>
+        </div>
+    </header>
+    <main class="container">
+        <section class="card">
+            <h2 style="margin-top:0">Escolha um esporte</h2>
+            <p class="muted">Clique em um bloco para ver regras e praticar. Agora com modo desafio e ranking!</p>
+            <div class="grid" id="sportsGrid"></div>
+        </section>
+        <section class="card sport-page" id="sportPageTemplate">
+            <button class="btn ghost" id="backBtn">← Voltar</button>
+            <h2 id="sportTitle">Futebol</h2>
+            <div class="muted" id="sportRules">Regras...</div>
+            <div class="actions">
+                <button class="btn" id="practiceBtn">Praticar</button>
+                <button class="btn" id="challengeBtn">Desafio</button>
+                <button class="btn ghost" id="showRewardsBtn">Medalhas e Personagens</button>
+            </div>
+            <div class="practice" id="practiceArea" style="display:none">
+                <div class="prompt" id="practicePrompt">Pressione a sequência correta no teclado quando aparecer.</div>
+                <div class="sequence" id="sequenceContainer"></div>
+                <div class="progress-bar"><div class="progress" id="progressBar" style="width:0%"></div></div>
+                <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+                    <button class="btn" id="startRunBtn">Iniciar rodada</button>
+                    <div class="muted">Use: K (Kick), J (Jump), ←/→ (Pass lateral)</div>
+                    <span class="timer" id="timerDisplay"></span>
+                    <span class="combo" id="comboDisplay"></span>
+                </div>
+                <div style="margin-top:12px;" id="runResult"></div>
+            </div>
+            <div class="ranking" id="rankingArea" style="display:none">
+                <h3>Ranking Local</h3>
+                <ul class="ranking-list" id="rankingList"></ul>
+            </div>
+        </section>
+    </main>
+    <div class="modal" id="rewardsModal">
+        <div class="modal-card">
+            <h3>Medalhas & Personagens</h3>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px" id="rewardsList"></div>
+            <div style="margin-top:12px;text-align:right">
+                <button class="btn ghost" id="closeRewards">Fechar</button>
+            </div>
+        </div>
+    </div>
+    <footer>Protótipo avançado — ranking local, combos, desafio com tempo, sons e animações. Dados salvos localmente.</footer>
+    <audio id="audioCorrect" src="https://cdn.jsdelivr.net/gh/rafaelrinaldi/noises@master/audio/coin.wav"></audio>
+    <audio id="audioWrong" src="https://cdn.jsdelivr.net/gh/rafaelrinaldi/noises@master/audio/error.wav"></audio>
+    <audio id="audioCombo" src="https://cdn.jsdelivr.net/gh/rafaelrinaldi/noises@master/audio/powerup.wav"></audio>
+    <script>
+    // --- Dados iniciais ---
+    const SPORTS = [
+        {
+            id: 'futebol', icon: '⚽', name: 'Futebol',
+            rules: 'Marque gols e respeite as posições. Movimentos: chutar (K), pular (J), passar para os lados (← →).',
+            pro: {name: 'Cristiano Ronaldo', unlockPoints: 250}
+        },
+        {
+            id: 'volei', icon: '🏐', name: 'Vôlei',
+            rules: 'Equipe de 6. Pontue com toques e bloqueios. Movimentos: salto (J), smash (K), deslocamento lateral (← →).',
+            pro: {name: 'Giba', unlockPoints: 200}
+        },
+        {
+            id: 'basquete', icon: '🏀', name: 'Basquete',
+            rules: 'Pontue arremessando dentro do cesto. Movimentos: drible (K), salto (J), passe (→).',
+            pro: {name: 'LeBron James', unlockPoints: 300}
+        }
+    ];
+    // Estado salvo
+    const state = JSON.parse(localStorage.getItem('sc_state') || '{}');
+    state.points = state.points || 0;
+    state.level = state.level || 1;
+    state.unlocked = state.unlocked || [];
+    // Ranking local
+    const ranking = JSON.parse(localStorage.getItem('sc_ranking') || '[]');
+    // --- UI references ---
+    const grid = document.getElementById('sportsGrid');
+    const sportTemplate = document.getElementById('sportPageTemplate');
+    const pointsBadge = document.getElementById('pointsBadge');
+    const levelBadge = document.getElementById('levelBadge');
+    const timerBadge = document.getElementById('timerBadge');
+    const rewardsModal = document.getElementById('rewardsModal');
+    const rewardsList = document.getElementById('rewardsList');
+    // --- Helpers ---
+    function saveState(){ localStorage.setItem('sc_state', JSON.stringify(state)); updateHud(); }
+    function updateHud(){ pointsBadge.textContent = 'Pontos: ' + state.points; levelBadge.textContent = 'Nível: ' + state.level; }
+    // --- Render tiles ---
+    SPORTS.forEach(s => {
+        const card = document.createElement('div'); card.className = 'card';
+        const tile = document.createElement('div'); tile.className = 'sport-tile';
+        tile.innerHTML = `<div class="emoji">${s.icon}</div><div style="flex:1"><div class="title">${s.name}</div><div class="muted">Clique para ver regras e praticar</div></div>`;
+        tile.addEventListener('click', ()=> openSport(s));
+        card.appendChild(tile); grid.appendChild(card);
+    });
+    // --- Open sport page ---
+    function openSport(sport){
+        document.querySelectorAll('.sport-page').forEach(p=>p.remove());
+        const page = sportTemplate.cloneNode(true); page.id = 'sport_'+sport.id; page.classList.add('active');
+        page.querySelector('#sportTitle').textContent = sport.name;
+        page.querySelector('#sportRules').textContent = sport.rules;
+        document.querySelector('.container').appendChild(page);
+        page.querySelector('#backBtn').addEventListener('click', ()=>{ page.remove(); });
+        page.querySelector('#practiceBtn').addEventListener('click', ()=>{ togglePractice(page, sport, false); });
+        page.querySelector('#challengeBtn').addEventListener('click', ()=>{ togglePractice(page, sport, true); });
+        page.querySelector('#showRewardsBtn').addEventListener('click', ()=>{ showRewards(); });
+        renderRanking(page, sport.id);
+    }
+    // --- Practice mode ---
+    function togglePractice(page, sport, challengeMode){
+        const area = page.querySelector('#practiceArea');
+        area.style.display = 'block';
+        setupPractice(area, sport, challengeMode, page);
+    }
+    function randPick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+    function setupPractice(area, sport, challengeMode, page){
+        const startBtn = area.querySelector('#startRunBtn');
+        const prompt = area.querySelector('#practicePrompt');
+        const seqCont = area.querySelector('#sequenceContainer');
+        const runResult = area.querySelector('#runResult');
+        const progressBar = area.querySelector('#progressBar');
+        const timerDisplay = area.querySelector('#timerDisplay');
+        const comboDisplay = area.querySelector('#comboDisplay');
+        let running = false, currentSequence = [], expectedIndex = 0, scoreThisRun = 0, timerStart = 0, timer = null, timeLimit = challengeMode ? 20 : 0, combo = 0, maxCombo = 0;
+        function genSequence(level){
+            const moves = ['K','J','ArrowLeft','ArrowRight'];
+            const len = challengeMode ? 8 + Math.floor(level*1.5) : Math.min(6, 2 + Math.floor(Math.sqrt(level)*1.2));
+            const seq = [];
+            for(let i=0;i<len;i++) seq.push(randPick(moves));
+            return seq;
+        }
+        function renderSequence(seq, revealUntil=-1){
+            seqCont.innerHTML='';
+            seq.forEach((m,i)=>{
+                const div=document.createElement('div');div.className='move';
+                div.textContent = keyToLabel(m);
+                if(i<=revealUntil) div.classList.add('expected');
+                if(i<expectedIndex) div.classList.add('correct');
+                if(i===expectedIndex && running) div.classList.add('expected');
+                seqCont.appendChild(div);
+            });
+            progressBar.style.width = ((expectedIndex/seq.length)*100)+'%';
+        }
+        function keyToLabel(k){
+            if(k === 'ArrowLeft') return '←';
+            if(k === 'ArrowRight') return '→';
+            if(k === 'K') return 'Kick (K)';
+            if(k === 'J') return 'Jump (J)';
+            return k;
+        }
+        function startRun(){
+            if(running) return;
+            running = true; scoreThisRun = 0; expectedIndex = 0; runResult.textContent = ''; combo = 0; maxCombo = 0;
+            currentSequence = genSequence(state.level);
+            renderSequence(currentSequence, -1);
+            prompt.textContent = 'Observe a sequência...';
+            let i = 0;
+            const interval = setInterval(()=>{
+                renderSequence(currentSequence, i);
+                i++;
+                if(i>=currentSequence.length){ clearInterval(interval); prompt.textContent = challengeMode ? 'Desafio: reproduza rápido!' : 'Agora reproduza com teclado!'; timerStart = performance.now();
+                    if(challengeMode){ startTimer(); }
+                }
+            }, 600);
+        }
+        function startTimer(){
+            let t = timeLimit;
+            timerDisplay.textContent = `⏱️ ${t}s`;
+            timerBadge.style.display = 'inline-block';
+            timerBadge.textContent = `Tempo: ${t}s`;
+            timer = setInterval(()=>{
+                t--;
+                timerDisplay.textContent = `⏱️ ${t}s`;
+                timerBadge.textContent = `Tempo: ${t}s`;
+                if(t<=0){ endRun(true); }
+            },1000);
+        }
+        function endRun(timeout=false){
+            running = false;
+            if(timer){ clearInterval(timer); timer=null; timerBadge.style.display='none'; timerDisplay.textContent=''; }
+            let bonus = 0;
+            if(!timeout){
+                const timeTaken = Math.round((performance.now()-timerStart)/1000);
+                if(challengeMode) bonus = Math.max(0, timeLimit-timeTaken)*5;
+            }
+            state.points += scoreThisRun + bonus;
+            if(state.points >= state.level * 150){ state.level++; }
+            if(!state.unlocked.includes(sport.pro.name) && state.points >= sport.pro.unlockPoints){ state.unlocked.push(sport.pro.name); }
+            saveState();
+            runResult.innerHTML = `Resultado: <strong>${scoreThisRun+bonus}</strong> pontos (${scoreThisRun} + bônus ${bonus})<br>Sequência: ${expectedIndex}/${currentSequence.length}.<br>Combo máximo: ${maxCombo}`;
+            if(expectedIndex === currentSequence.length && scoreThisRun >= currentSequence.length*10){
+                giveMedal(sport.name);
+                runResult.innerHTML += '<br><span style="color:#06b6d4;font-weight:700">Medalha conquistada!</span>';
+            }
+            if(challengeMode){
+                // Ranking
+                const player = prompt('Digite seu nome para o ranking:','Jogador');
+                if(player){
+                    ranking.push({name:player, sport:sport.id, score:scoreThisRun+bonus, date:new Date().toLocaleDateString()});
+                    ranking.sort((a,b)=>b.score-a.score);
+                    localStorage.setItem('sc_ranking', JSON.stringify(ranking.slice(0,10)));
+                    renderRanking(page, sport.id);
+                }
+            }
+        }
+        function handleKey(k){
+            if(!running) return;
+            const key = mapKey(k);
+            if(!key) return;
+            const expected = currentSequence[expectedIndex];
+            const moveDivs = seqCont.querySelectorAll('.move');
+            if(key === expected){
+                scoreThisRun += 10; expectedIndex++; combo++; maxCombo = Math.max(combo,maxCombo);
+                moveDivs[expectedIndex-1].classList.add('correct');
+                playSound('correct');
+                if(combo>1){ comboDisplay.textContent = `Combo x${combo}`; playSound('combo'); }
+                else comboDisplay.textContent = '';
+            }else{
+                scoreThisRun += 2; combo=0; comboDisplay.textContent='';
+                moveDivs[expectedIndex].classList.add('wrong');
+                playSound('wrong');
+            }
+            renderSequence(currentSequence, expectedIndex-1);
+            if(expectedIndex >= currentSequence.length){ endRun(); }
+        }
+        function mapKey(k){
+            if(k === 'k' || k==='K') return 'K';
+            if(k === 'j' || k==='J') return 'J';
+            if(k === 'ArrowLeft') return 'ArrowLeft';
+            if(k === 'ArrowRight') return 'ArrowRight';
+            return null;
+        }
+        startBtn.onclick = ()=>{ startRun(); };
+        function onKey(e){ handleKey(e.key); }
+        window.addEventListener('keydown', onKey);
+        area.dataset.cleanup = 'true';
+    }
+    function playSound(type){
+        if(type==='correct') document.getElementById('audioCorrect').play();
+        if(type==='wrong') document.getElementById('audioWrong').play();
+        if(type==='combo') document.getElementById('audioCombo').play();
+    }
+    function giveMedal(sportName){
+        const medals = JSON.parse(localStorage.getItem('sc_medals') || '[]');
+        medals.push({sport: sportName, date: (new Date()).toLocaleDateString()});
+        localStorage.setItem('sc_medals', JSON.stringify(medals));
+    }
+    // --- Rewards modal ---
+    function showRewards(){
+        rewardsList.innerHTML='';
+        const medals = JSON.parse(localStorage.getItem('sc_medals') || '[]');
+        const medalBox = document.createElement('div'); medalBox.className='card'; medalBox.style.padding='12px';
+        medalBox.innerHTML = `<strong>Medalhas:</strong><div class="muted">Você tem ${medals.length} medalha(s).</div>`;
+        rewardsList.appendChild(medalBox);
+        SPORTS.forEach(s=>{
+            const box = document.createElement('div'); box.className='card'; box.style.minWidth='200px';
+            box.innerHTML = `<div style="display:flex;align-items:center;gap:8px"><div class="emoji">${s.icon}</div><div><strong>${s.name}</strong><div class="muted">Pro: ${s.pro.name}</div><div class="muted">Desbloqueia em ${s.pro.unlockPoints} pontos</div></div></div>`;
+            if(state.unlocked.includes(s.pro.name)){
+                const unlocked = document.createElement('div'); unlocked.textContent = 'Desbloqueado ✓'; unlocked.style.marginTop='8px'; unlocked.style.fontWeight='700'; box.appendChild(unlocked);
+            } else {
+                const need = document.createElement('div'); need.className='muted'; need.style.marginTop='8px'; need.textContent = `Faltam ${Math.max(0, s.pro.unlockPoints - state.points)} pontos para desbloquear.`; box.appendChild(need);
+            }
+            rewardsList.appendChild(box);
+        });
+        const unlockedBox = document.createElement('div'); unlockedBox.className='card'; unlockedBox.style.padding='12px'; unlockedBox.innerHTML = `<strong>Personagens desbloqueados:</strong><div class="muted">${state.unlocked.length ? state.unlocked.join(', ') : 'Nenhum ainda'}</div>`;
+        rewardsList.appendChild(unlockedBox);
+        rewardsModal.classList.add('show');
+    }
+    document.getElementById('closeRewards').addEventListener('click', ()=>{ rewardsModal.classList.remove('show'); });
+    // --- Ranking ---
+    function renderRanking(page, sportId){
+        const area = page.querySelector('#rankingArea');
+        const list = page.querySelector('#rankingList');
+        area.style.display = 'block';
+        list.innerHTML = '';
+        const filtered = ranking.filter(r=>r.sport===sportId).slice(0,10);
+        if(filtered.length===0){ list.innerHTML='<li>Nenhum registro ainda.</li>'; return; }
+        filtered.forEach((r,i)=>{
+            const li = document.createElement('li');
+            li.innerHTML = `<span>#${i+1} ${r.name}</span><span>${r.score} pts</span>`;
+            list.appendChild(li);
+        });
+    }
+    // init
+    updateHud();
+    window.addEventListener('keydown', (e)=>{
+        if(e.key === 'p' && (e.ctrlKey || e.metaKey)){
+            state.points += 50; saveState(); alert('Adicionado 50 pontos (teste)');
+        }
+    });
+    </script>
+</body>
+</html>
